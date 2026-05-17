@@ -126,9 +126,13 @@ NAT Gateway:
 - VPC 내부 → NAT Gateway → 인터넷 방향만 가능. 외부에서 NAT Gateway를 통해 VPC 안으로 들어올 수 없음
 - 💡 인터넷에 연결된 Public Subnet에 NAT Gateway를 생성한 뒤, Private Subnet의 라우팅 테이블에 `0.0.0.0/0 → NAT Gateway`로 잡아주면 사용 가능
 - AZ 단위 리소스 — 💡 고가용성을 원하면 각 AZ마다 NAT Gateway를 두어야 함. 한 NAT Gateway에 다 몰면 그 AZ가 죽으면 다른 AZ의 EC2도 인터넷이 끊김
-- 대역폭 최대 45Gbps까지 자동 확장
+- 💡 대역폭: 기본 5 Gbps에서 시작해 트래픽 증가 시 자동으로 최대 100 Gbps까지 확장
 - 보안 그룹 사용 불가, NACL로만 트래픽 제어
 - CloudWatch로 모니터링 가능
+
+> 참고 자료 정정 — NAT Gateway 대역폭
+> 기존 문서에서는 "최대 45Gbps"로 서술했으나, 정확하게는 AWS 공식 문서 기준으로 시작 5 Gbps에서 자동으로 최대 100 Gbps까지 확장됨.
+> 참고: https://docs.aws.amazon.com/vpc/latest/userguide/nat-gateway-basics.html
 
 NAT Instance (비권장 — 레거시):
 - NAT Gateway 대신 EC2 인스턴스를 사용하는 방식
@@ -142,7 +146,7 @@ NAT Gateway vs NAT Instance:
 |----|-----------|------------|
 | 관리 | AWS 관리형 | 사용자 직접 관리 |
 | 가용성 | AZ 내 자동 고가용성 | 직접 Failover 스크립트 필요 |
-| 대역폭 | 최대 45Gbps | 인스턴스 유형에 따라 다름 |
+| 대역폭 | 최대 100 Gbps (자동 확장) | 인스턴스 유형에 따라 다름 |
 | 보안 그룹 | 사용 불가 | 사용 가능 |
 | NACL | 사용 가능 | 사용 가능 |
 
