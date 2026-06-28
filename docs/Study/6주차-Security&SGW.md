@@ -238,7 +238,7 @@ flowchart LR
 
 💡 게이트웨이를 어떻게 두나 (배포 방식): Storage Gateway는 관리형 서비스지만 "게이트웨이" 본체는 내 온프레미스에 직접 띄워야 한다. 막연한 "다리"가 아니라 실제로는 내 서버실에 도는 소프트웨어 한 대.
 
-- VM 이미지를 받아 VMware ESXi·Microsoft Hyper-V·Linux KVM에 설치 (가장 일반적. 소프트웨어 자체는 무료 — 실제 비용은 S3 저장·전송량)
+- VM 이미지를 받아 사내 가상화 플랫폼(VMware ESXi·Microsoft Hyper-V·Linux KVM 등 하이퍼바이저)에 설치 (가장 일반적. 소프트웨어 자체는 무료 — 실제 비용은 S3 저장·전송량)
 - 가상화 인프라가 없으면 AWS가 파는 전용 하드웨어 장비(Storage Gateway Hardware Appliance)를 구매해 사용
 - 클라우드 내 용도면 EC2 인스턴스로도 실행 가능
 - 설치 후 AWS 콘솔에서 그 게이트웨이를 내 계정에 활성화(activate)하면 S3 등과 연결됨
@@ -314,7 +314,7 @@ flowchart LR
 
 | 서비스 | 계층/범위 | 막는 것 | 붙는 위치 |
 |------|--------|------|--------|
-| Shield | L3/L4 (+Advanced는 L7 모니터링) | DDoS | CloudFront·ELB·Route 53·GA 등 |
+| Shield | L3/L4 (+Advanced는 L7 모니터링) | DDoS | CloudFront·ELB·Route 53·Global Accelerator 등 |
 | WAF | L7 (HTTP) | SQLi·XSS·봇·Rate 초과 | CloudFront·ALB·API Gateway |
 | Network Firewall | VPC 전체 (L3~L7) | VPC 인/아웃 트래픽 전반 | VPC |
 
